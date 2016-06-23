@@ -1,18 +1,19 @@
-﻿@model IEnumerable<CrossfitUniversity.Models.Athlete>
-
+﻿@model PagedList.IPagedList<CrossfitUniversity.Models.Athlete>
+@using PagedList.Mvc;
+<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Athletes";
 }
 
-<h2>Index</h2>
+<h2>Athletes</h2>
 
 <p>
     @Html.ActionLink("Create New", "Create")
 </p>
-@using (Html.BeginForm())
+@using (Html.BeginForm("Index", "Athlete", FormMethod.Get))
 {
     <p>
-        Find by name: @Html.TextBox("SearchString")
+        Find by name: @Html.TextBox("SearchString", ViewBag.CurrentFilter as string)
         <input type="submit" value="Search" />
     </p>
 }
@@ -20,85 +21,85 @@
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.CfId)
+           CfId
         </th>
         <th>
-            @Html.ActionLink("Name", "Index", new { sortOrder = ViewBag.NameSortParm })
+            @Html.ActionLink("Name", "Index", new { sortOrder = ViewBag.NameSortParm, currentFilter = ViewBag.CurrentFilter })
         </th>
         <th>
-            @Html.ActionLink("Region", "Index", new { sortOrder = ViewBag.RegionSortParm })
+            @Html.ActionLink("Region", "Index", new { sortOrder = ViewBag.RegionSortParm, currentFilter = ViewBag.CurrentFilter })
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Team)
+           Team
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Gender)
+           Gender
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Age)
+           Age
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Height)
+           Height
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Weight)
+           Weight
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Fran)
+           Fran
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Helen)
+           Helen
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Grace)
+           Grace
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Filthy50)
+           Filthy50
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Fgonebad)
+           Fgonebad
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Run400)
+           Run400
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Run5k)
+           Run5k
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Candj)
+           Candj
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Snatch)
+           Snatch
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Deadlift)
+           Deadlift
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Backsq)
+           Backsq
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Pullups)
+           Pullups
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Eat)
+           Eat
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Train)
+           Train
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Background)
+           Background
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Experience)
+           Experience
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Schedule)
+           Schedule
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Howlong)
+           Howlong
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.RetrievedDatetime)
+           RetrievedDatetime
         </th>
         <th></th>
     </tr>
@@ -195,3 +196,8 @@
 }
 
 </table>
+<br />
+Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+
+@Html.PagedListPager(Model, page => Url.Action("Index",
+    new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))

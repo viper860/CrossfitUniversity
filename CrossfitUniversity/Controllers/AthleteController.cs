@@ -5,6 +5,7 @@ using System.Data.Entity;
 using System.Linq;
 using System.Net;
 using System.Web;
+using PagedList;
 using System.Web.Mvc;
 using CrossfitUniversity.DAL;
 using CrossfitUniversity.Models;
@@ -16,12 +17,24 @@ namespace CrossfitUniversity.Controllers
         private CrossfitContext db = new CrossfitContext();
 
         // GET: Athlete
-        public ActionResult Index(string sortOrder, string searchString)
+        public ActionResult Index(string sortOrder, string currentFilter, string searchString, int? page)
         {
             //return View(db.Athletes.ToList());
-
+            ViewBag.CurrentSort = sortOrder;
             ViewBag.NameSortParm = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
             ViewBag.RegionSortParm = sortOrder == "Region" ? "region_desc" : "Region";
+
+            if (searchString != null)
+            {
+                page = 1;
+            }
+            else
+            {
+                searchString = currentFilter;
+            }
+
+            ViewBag.CurrentFilter = searchString;
+
             var athletes = from a in db.Athletes
                            select a;
             if (!String.IsNullOrEmpty(searchString))
@@ -44,7 +57,10 @@ namespace CrossfitUniversity.Controllers
                     athletes = athletes.OrderBy(a => a.Name);
                     break;
             }
-            return View(athletes.ToList());
+            //return View(athletes.ToList());
+            int pageSize = 5;
+            int pageNumber = (page ?? 1);
+            return View(athletes.ToPagedList(pageNumber, pageSize));
         }
 
         // GET: Athlete/Details/5
