@@ -18,7 +18,6 @@ namespace CrossfitUniversity.Models
         public string Latitude { get; set; }
         public string Longitude { get; set; }
         public string Cfkids { get; set; }
-
         public virtual ICollection<Athlete> Athletes { get; set; }
     }
 }
