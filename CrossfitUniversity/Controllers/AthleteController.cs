@@ -16,7 +16,7 @@ namespace CrossfitUniversity.Controllers
         private CrossfitContext db = new CrossfitContext();
 
         // GET: Athlete
-        public ActionResult Index(string sortOrder)
+        public ActionResult Index(string sortOrder, string searchString)
         {
             //return View(db.Athletes.ToList());
 
@@ -24,6 +24,11 @@ namespace CrossfitUniversity.Controllers
             ViewBag.RegionSortParm = sortOrder == "Region" ? "region_desc" : "Region";
             var athletes = from a in db.Athletes
                            select a;
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                athletes = athletes.Where(a => a.Name.Contains(searchString)
+                                       || a.Region.Contains(searchString));
+            }
             switch (sortOrder)
             {
                 case "name_desc":

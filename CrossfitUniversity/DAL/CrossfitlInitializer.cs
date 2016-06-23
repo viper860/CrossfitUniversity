@@ -11,7 +11,8 @@ using System.Web;
 namespace CrossfitUniversity.DAL
 {
 
-    public class CrossfitInitializer : System.Data.Entity.DropCreateDatabaseAlways<CrossfitContext>
+    //public class CrossfitInitializer : System.Data.Entity.DropCreateDatabaseAlways<CrossfitContext>
+    public class CrossfitInitializer : System.Data.Entity.DropCreateDatabaseIfModelChanges<CrossfitContext>
     {
         protected override void Seed(CrossfitContext context)
         {
