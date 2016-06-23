@@ -128,6 +128,7 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\AthleteController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="DAL\CrossfitContext.cs" />
     <Compile Include="DAL\CrossfitlInitializer.cs" />
@@ -177,6 +178,11 @@
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\Athlete\Create.cshtml" />
+    <Content Include="Views\Athlete\Delete.cshtml" />
+    <Content Include="Views\Athlete\Details.cshtml" />
+    <Content Include="Views\Athlete\Edit.cshtml" />
+    <Content Include="Views\Athlete\Index.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

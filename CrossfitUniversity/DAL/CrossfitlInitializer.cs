@@ -4,18 +4,20 @@ using System;
 using System.Collections.Generic;
 using System.Data.Entity.Validation;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Web;
 
 namespace CrossfitUniversity.DAL
 {
 
-    public class CrossfitInitializer : System.Data.Entity.DropCreateDatabaseIfModelChanges<CrossfitContext>
+    public class CrossfitInitializer : System.Data.Entity.DropCreateDatabaseAlways<CrossfitContext>
     {
         protected override void Seed(CrossfitContext context)
         {
             var athletes = LoadAthletes();
-            athletes.ForEach(athlete => context.Athletes.Add(athlete));
+            //athletes.ForEach(athlete => context.Athletes.Add(athlete));
+            context.Athletes.AddRange(athletes);
             try
             {
                 context.SaveChanges();
@@ -32,7 +34,8 @@ namespace CrossfitUniversity.DAL
             }
 
             var affiliates = LoadAffiliates();
-            affiliates.ForEach(affiliate => context.Affiliates.Add(affiliate));
+            //affiliates.ForEach(affiliate => context.Affiliates.Add(affiliate));
+            context.Affiliates.AddRange(affiliates);
             try
             {
                 context.SaveChanges();
@@ -51,7 +54,9 @@ namespace CrossfitUniversity.DAL
 
         private static List<Athlete> LoadAthletes()
         {
-            CsvManager<Athlete> athletesManager = new CsvManager<Athlete>(@"D:\Users\s3803\Downloads\athletes3.csv", true);
+            var fileName = HttpContext.Current.Server.MapPath("~/App_Data/athletes3.csv");
+            //var fileName = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "athletes3.csv");
+            CsvManager<Athlete> athletesManager = new CsvManager<Athlete>(fileName, true);
             //athletesManager.SetField(x => x.AthleteId, 0);
             athletesManager.SetField(x => x.CfId, 0);
             athletesManager.SetField(x => x.Name, 1);
@@ -88,7 +93,9 @@ namespace CrossfitUniversity.DAL
 
         private static List<Affiliate> LoadAffiliates()
         {
-            CsvManager<Affiliate> affiliatesManager = new CsvManager<Affiliate>(@"D:\Users\s3803\Downloads\affiliates.csv", true);
+            //var fileName = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "affiliates.csv");
+            var fileName = HttpContext.Current.Server.MapPath("~/App_Data/affiliates.csv");
+            CsvManager<Affiliate> affiliatesManager = new CsvManager<Affiliate>(fileName, true);
             //athletesManager.SetField(x => x.AthleteId, 0);
             affiliatesManager.SetField(x => x.CfAffiliateId, 0);
             affiliatesManager.SetField(x => x.Name, 1);

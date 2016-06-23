@@ -1,0 +1,189 @@
+﻿@model IEnumerable<CrossfitUniversity.Models.Athlete>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.CfId)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Region)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Team)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Gender)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Age)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Height)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Weight)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Fran)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Helen)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Grace)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Filthy50)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Fgonebad)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Run400)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Run5k)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Candj)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Snatch)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Deadlift)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Backsq)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Pullups)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Eat)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Train)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Background)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Experience)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Schedule)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Howlong)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.RetrievedDatetime)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.CfId)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Region)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Team)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Gender)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Age)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Height)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Weight)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Fran)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Helen)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Grace)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Filthy50)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Fgonebad)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Run400)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Run5k)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Candj)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Snatch)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Deadlift)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Backsq)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Pullups)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Eat)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Train)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Background)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Experience)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Schedule)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Howlong)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.RetrievedDatetime)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.AthleteId }) |
+            @Html.ActionLink("Details", "Details", new { id=item.AthleteId }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.AthleteId })
+        </td>
+    </tr>
+}
+
+</table>
