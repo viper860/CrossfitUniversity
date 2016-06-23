@@ -15,10 +15,10 @@
             @Html.DisplayNameFor(model => model.CfId)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Name)
+            @Html.ActionLink("Name", "Index", new { sortOrder = ViewBag.NameSortParm })
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Region)
+            @Html.ActionLink("Region", "Index", new { sortOrder = ViewBag.RegionSortParm })
         </th>
         <th>
             @Html.DisplayNameFor(model => model.Team)

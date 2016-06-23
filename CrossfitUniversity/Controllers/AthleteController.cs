@@ -16,9 +16,30 @@ namespace CrossfitUniversity.Controllers
         private CrossfitContext db = new CrossfitContext();
 
         // GET: Athlete
-        public ActionResult Index()
+        public ActionResult Index(string sortOrder)
         {
-            return View(db.Athletes.ToList());
+            //return View(db.Athletes.ToList());
+
+            ViewBag.NameSortParm = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
+            ViewBag.RegionSortParm = sortOrder == "Region" ? "region_desc" : "Region";
+            var athletes = from a in db.Athletes
+                           select a;
+            switch (sortOrder)
+            {
+                case "name_desc":
+                    athletes = athletes.OrderByDescending(a => a.Name);
+                    break;
+                case "Region":
+                    athletes = athletes.OrderBy(a => a.Region);
+                    break;
+                case "region_desc":
+                    athletes = athletes.OrderByDescending(a => a.Region);
+                    break;
+                default:
+                    athletes = athletes.OrderBy(a => a.Name);
+                    break;
+            }
+            return View(athletes.ToList());
         }
 
         // GET: Athlete/Details/5
