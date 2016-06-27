@@ -10,7 +10,7 @@ namespace CrossfitUniversity.Models
     {
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int AffiliateId { get; set; }
-        public string CfAffiliateId { get; set; }
+        public int CfAffiliateId { get; set; }
         public string Name { get; set; }
         public string Address { get; set; }
         public string Phone { get; set; }

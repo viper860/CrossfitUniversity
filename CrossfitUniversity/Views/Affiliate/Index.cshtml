@@ -1,0 +1,81 @@
+﻿@model CrossfitUniversity.ViewModels.AffiliateIndexData
+
+@{
+    ViewBag.Title = "Affiliates";
+}
+
+<h2>Affiliates</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            CfAffiliateId
+        </th>
+        <th>
+            Name
+        </th>
+        <th>
+            Address
+        </th>
+        <th>
+            Phone
+        </th>
+        <th>
+            Url
+        </th>
+        <th>
+            Latitude
+        </th>
+        <th>
+            Longitude
+        </th>
+        <th>
+            Cfkids
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model.Affiliates) {
+    string selectedRow = "";
+    if (item.CfAffiliateId == ViewBag.CfAffiliateId)
+    {
+        selectedRow = "success";
+    }
+    <tr class="@selectedRow">
+        <td>
+            @Html.DisplayFor(modelItem => item.CfAffiliateId)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Address)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Phone)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Url)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Latitude)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Longitude)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Cfkids)
+        </td>
+        <td>
+            @Html.ActionLink("Select", "Index", new { id = item.CfAffiliateId }) |
+            @Html.ActionLink("Edit", "Edit", new { id=item.AffiliateId }) |
+            @Html.ActionLink("Details", "Details", new { id=item.AffiliateId }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.AffiliateId })
+        </td>
+    </tr>
+}
+
+</table>

@@ -136,16 +136,31 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\AffiliateController.cs" />
     <Compile Include="Controllers\AthleteController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="DAL\CrossfitContext.cs" />
+    <Compile Include="DAL\CrossfitInterceptorLogging.cs" />
+    <Compile Include="DAL\CrossfitInterceptorTransientErrors.cs" />
     <Compile Include="DAL\CrossfitlInitializer.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Logging\ILogger.cs" />
+    <Compile Include="Logging\Logger.cs" />
+    <Compile Include="Migrations\201606232040552_InitialCreate.cs" />
+    <Compile Include="Migrations\201606232040552_InitialCreate.Designer.cs">
+      <DependentUpon>201606232040552_InitialCreate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201606271541148_Updated Model CFAffiliateId to Int.cs" />
+    <Compile Include="Migrations\201606271541148_Updated Model CFAffiliateId to Int.Designer.cs">
+      <DependentUpon>201606271541148_Updated Model CFAffiliateId to Int.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Affiliate.cs" />
     <Compile Include="Models\Athlete.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ViewModels\AffiliateIndexData.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap.css" />
@@ -192,8 +207,20 @@
     <Content Include="Views\Athlete\Details.cshtml" />
     <Content Include="Views\Athlete\Edit.cshtml" />
     <Content Include="Views\Athlete\Index.cshtml" />
+    <Content Include="Views\Affiliate\Create.cshtml" />
+    <Content Include="Views\Affiliate\Delete.cshtml" />
+    <Content Include="Views\Affiliate\Details.cshtml" />
+    <Content Include="Views\Affiliate\Edit.cshtml" />
+    <Content Include="Views\Affiliate\Index.cshtml" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201606232040552_InitialCreate.resx">
+      <DependentUpon>201606232040552_InitialCreate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201606271541148_Updated Model CFAffiliateId to Int.resx">
+      <DependentUpon>201606271541148_Updated Model CFAffiliateId to Int.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />

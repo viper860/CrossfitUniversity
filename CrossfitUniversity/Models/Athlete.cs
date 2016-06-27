@@ -14,7 +14,9 @@ namespace CrossfitUniversity.Models
         public string Name { get; set; }
         public string Region { get; set; }
         public string Team { get; set; }
-        //public string Affiliate { get; set; }
+
+        [System.ComponentModel.DataAnnotations.Schema.NotMapped]
+        public string AffiliateName { get; set; }
         public string Gender { get; set; }
         public string Age { get; set; }
         public string Height { get; set; }
