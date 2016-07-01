@@ -22,6 +22,8 @@ namespace CrossfitUniversity.Migrations
         {
             //  This method will be called after migrating to the latest version.
 
+
+            context.Configuration.AutoDetectChangesEnabled = false;
             //  You can use the DbSet<T>.AddOrUpdate() helper extension method 
             //  to avoid creating duplicate seed data. E.g.
             //
@@ -36,8 +38,8 @@ namespace CrossfitUniversity.Migrations
             //    System.Diagnostics.Debugger.Launch();
 
             var affiliates = LoadAffiliates();
-            //affiliates.ForEach(affiliate => context.Affiliates.Add(affiliate));
-            context.Affiliates.AddRange(affiliates);
+            affiliates.ForEach(affiliate => context.Affiliates.AddOrUpdate(a => a.CfAffiliateId, affiliate));
+            //context.Affiliates.AddRange(affiliates);
             try
             {
                 context.SaveChanges();
@@ -53,40 +55,112 @@ namespace CrossfitUniversity.Migrations
                 }
             }
 
+            string fileName = AppDomain.CurrentDomain.BaseDirectory + "/../App_Data/athletes3.csv";
+            string outFileName = AppDomain.CurrentDomain.BaseDirectory + "/../App_Data/temp_athletes3/athletes_s_";
+            Split(fileName,outFileName);
             //
-            var athletes = LoadAthletes();
-            //athletes.ForEach(athlete => context.Athletes.Add(athlete));
-            foreach (Athlete athlete in athletes)
-            {
-              var affiliate = context.Affiliates.Where(a => a.Name == athlete.AffiliateName).FirstOrDefault();
+            string path = AppDomain.CurrentDomain.BaseDirectory + "/../App_Data/temp_athletes3/";
+            string searchPattern = "*.*";
 
+            string[] dirNameArray = Directory.GetFiles(path, searchPattern);
+            foreach (string temppath in dirNameArray)
+            {
+                var athletes = LoadAthletes(temppath);
 
-                athlete.Affiliate = affiliate;
-            }
-            context.Athletes.AddRange(athletes);
-            try
-            {
-                context.SaveChanges();
-            }
-            catch (DbEntityValidationException dbEx)
-            {
-                foreach (var validationErrors in dbEx.EntityValidationErrors)
+                //var athletes = LoadAthletes("test");
+                //athletes.ForEach(athlete => context.Athletes.Add(athlete));
+                int count = 0;
+                foreach (Athlete athlete in athletes)
                 {
-                    foreach (var validationError in validationErrors.ValidationErrors)
+                    
+                    var affiliate = context.Affiliates.Where(a => a.Name == athlete.AffiliateName).FirstOrDefault();
+
+
+                    athlete.Affiliate = affiliate;
+                    if (athlete.Name != "NA" && athlete.Name != null && athlete.CfId != 0)
                     {
-                        Trace.TraceInformation("Property: {0} Error: {1}", validationError.PropertyName, validationError.ErrorMessage);
+                        count++;
+                        context.Athletes.AddOrUpdate(a => a.CfId, athlete);
+                    }
+
+
+                    //             context.Athletes.Add(athlete);
+                    if ( count % 1000 == 0 )
+                    {
+                        try
+                        {
+                            context.SaveChanges();
+
+                        }
+                        catch (DbEntityValidationException dbEx)
+                        {
+                            foreach (var validationErrors in dbEx.EntityValidationErrors)
+                            {
+                                foreach (var validationError in validationErrors.ValidationErrors)
+                                {
+                                    Trace.TraceInformation("Property: {0} Error: {1}", validationError.PropertyName, validationError.ErrorMessage);
+                                }
+                            }
+                        }
+                        context.Dispose();
+                        context = new DAL.CrossfitContext();
+                        context.Configuration.AutoDetectChangesEnabled = false;
+                    }
+                }
+                //       context.Athletes.AddRange(athletes);
+                
+                try
+                {
+                    context.SaveChanges();
+                }
+                catch (DbEntityValidationException dbEx)
+                {
+                    foreach (var validationErrors in dbEx.EntityValidationErrors)
+                    {
+                        foreach (var validationError in validationErrors.ValidationErrors)
+                        {
+                            Trace.TraceInformation("Property: {0} Error: {1}", validationError.PropertyName, validationError.ErrorMessage);
+                        }
                     }
                 }
             }
-
 
         }
-    
 
-    private static List<Athlete> LoadAthletes()
+        public void Split(string inputfile, string outputfilesformat)
+        {
+            int i = 0;
+            System.IO.StreamWriter outfile = null;
+            string line;
+
+            //try
+            //{
+                using (var infile = new System.IO.StreamReader(inputfile))
+                {
+                    while (!infile.EndOfStream)
+                    {
+                        int count = 0;
+                        using (System.IO.StreamWriter sw = new System.IO.StreamWriter(outputfilesformat + ++i + ".csv"))
+                        {
+                            sw.AutoFlush = true;
+
+                            while (!infile.EndOfStream && ++count < 20000)
+                            {
+                                sw.WriteLine(infile.ReadLine());
+                            }
+                        }
+
+                    }
+                  
+
+                }
+            //}
+       
+        }
+        private static List<Athlete> LoadAthletes(string fileName)
     {
        // var fileName = HttpContext.Current.Server.MapPath("~/App_Data/athletes3.csv");
-            string fileName = AppDomain.CurrentDomain.BaseDirectory + "/../App_Data/athletes3.csv";
+            //fileName = AppDomain.CurrentDomain.BaseDirectory + "/../App_Data/athletes3.csv";
             System.Diagnostics.Debug.Write(fileName);
 
         //var fileName = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "athletes3.csv");

@@ -99,7 +99,7 @@ public class CsvManager<T> where T: new()
                 //        csvFieldResult.FieldValue = null;
                 //    }
                 //}
-                if ((propertyType.Name == "Int32" || propertyType.Name == "Double") && (String.IsNullOrEmpty(csvFieldResult.FieldValue.ToString())))
+                if ((propertyType.Name == "Int32" || propertyType.Name == "Double") && (String.IsNullOrEmpty(csvFieldResult.FieldValue.ToString())|| csvFieldResult.FieldValue.ToString().ToUpper() =="NA"))
                 {
                     csvFieldResult.FieldValue = 0;
                 } 

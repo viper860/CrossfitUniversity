@@ -25,7 +25,7 @@ namespace CrossfitUniversity.Controllers
             viewModel.Affiliates = db.Affiliates
                 .Include(a => a.Athletes)
                 //.Include(i => i.Courses.Select(c => c.Department))
-                .OrderBy(a => a.Name).Take(10);
+                .OrderBy(a => a.Name).Take(50);
 
             if (id != null)
             {

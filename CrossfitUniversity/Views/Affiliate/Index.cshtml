@@ -38,44 +38,107 @@
         <th></th>
     </tr>
 
-@foreach (var item in Model.Affiliates) {
-    string selectedRow = "";
-    if (item.CfAffiliateId == ViewBag.CfAffiliateId)
+    @foreach (var item in Model.Affiliates)
     {
-        selectedRow = "success";
+        string selectedRow = "";
+        if (item.CfAffiliateId == ViewBag.CfAffiliateId)
+        {
+            selectedRow = "success";
+        }
+        <tr class="@selectedRow">
+            <td>
+                @Html.DisplayFor(modelItem => item.CfAffiliateId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Address)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Phone)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Url)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Latitude)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Longitude)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Cfkids)
+            </td>
+            <td>
+                @Html.ActionLink("Select", "Index", new { id = item.CfAffiliateId }) |
+                @Html.ActionLink("Edit", "Edit", new { id = item.AffiliateId }) |
+                @Html.ActionLink("Details", "Details", new { id = item.AffiliateId }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.AffiliateId })
+            </td>
+        </tr>
     }
-    <tr class="@selectedRow">
+
+</table>
+@if (Model.Athletes != null)
+{
+    <h3>Athletes by Selected Affiliate</h3>
+<table class="table">
+    <tr>
+        <th>
+            CfId
+        </th>
+        <th>
+            @Html.ActionLink("Name", "Index", new { sortOrder = ViewBag.NameSortParm, currentFilter = ViewBag.CurrentFilter })
+        </th>
+        <th>
+            @Html.ActionLink("Region", "Index", new { sortOrder = ViewBag.RegionSortParm, currentFilter = ViewBag.CurrentFilter })
+        </th>
+        <th>
+            Team
+        </th>
+        <th>
+            Gender
+        </th>
+        <th>
+            Age
+        </th>
+        <th>
+            Height
+        </th>
+        <th>
+            Weight
+        </th>
+    </tr>
+@foreach (var item in Model.Athletes)
+{
+    <tr>
         <td>
-            @Html.DisplayFor(modelItem => item.CfAffiliateId)
+            @Html.DisplayFor(modelItem => item.CfId)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Name)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Address)
+            @Html.DisplayFor(modelItem => item.Region)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Phone)
+            @Html.DisplayFor(modelItem => item.Team)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Url)
+            @Html.DisplayFor(modelItem => item.Gender)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Latitude)
+            @Html.DisplayFor(modelItem => item.Age)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Longitude)
+            @Html.DisplayFor(modelItem => item.Height)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Cfkids)
-        </td>
-        <td>
-            @Html.ActionLink("Select", "Index", new { id = item.CfAffiliateId }) |
-            @Html.ActionLink("Edit", "Edit", new { id=item.AffiliateId }) |
-            @Html.ActionLink("Details", "Details", new { id=item.AffiliateId }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.AffiliateId })
+            @Html.DisplayFor(modelItem => item.Weight)
         </td>
     </tr>
 }
 
 </table>
+}
