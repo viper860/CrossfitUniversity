@@ -23,7 +23,7 @@ namespace CrossfitUniversity.Controllers
             ViewBag.CurrentSort = sortOrder;
             ViewBag.NameSortParm = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
             ViewBag.RegionSortParm = sortOrder == "Region" ? "region_desc" : "Region";
-
+            //int PageSize = 10;
             if (searchString != null)
             {
                 page = 1;

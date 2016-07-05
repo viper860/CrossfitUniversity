@@ -1,5 +1,5 @@
 ﻿@model CrossfitUniversity.ViewModels.AffiliateIndexData
-
+@using PagedList.Mvc;
 @{
     ViewBag.Title = "Affiliates";
 }
@@ -38,7 +38,7 @@
         <th></th>
     </tr>
 
-    @foreach (var item in Model.Affiliates)
+    @foreach (var item in Model.AffiliatePagedList)
     {
         string selectedRow = "";
         if (item.CfAffiliateId == ViewBag.CfAffiliateId)
@@ -71,7 +71,7 @@
                 @Html.DisplayFor(modelItem => item.Cfkids)
             </td>
             <td>
-                @Html.ActionLink("Select", "Index", new { id = item.CfAffiliateId }) |
+                @Html.ActionLink("Select", "Index", new { id = item.CfAffiliateId, page = Model.AffiliatePagedList.PageNumber }) |
                 @Html.ActionLink("Edit", "Edit", new { id = item.AffiliateId }) |
                 @Html.ActionLink("Details", "Details", new { id = item.AffiliateId }) |
                 @Html.ActionLink("Delete", "Delete", new { id = item.AffiliateId })
@@ -80,6 +80,9 @@
     }
 
 </table>
+Page @(Model.AffiliatePagedList.PageCount < Model.AffiliatePagedList.PageNumber ? 0 : Model.AffiliatePagedList.PageNumber) of @Model.AffiliatePagedList.PageCount
+@Html.PagedListPager(Model.AffiliatePagedList, page => Url.Action("Index",
+    new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))
 @if (Model.Athletes != null)
 {
     <h3>Athletes by Selected Affiliate</h3>

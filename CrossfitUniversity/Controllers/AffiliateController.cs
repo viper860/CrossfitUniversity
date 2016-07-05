@@ -9,6 +9,7 @@ using System.Web.Mvc;
 using CrossfitUniversity.DAL;
 using CrossfitUniversity.Models;
 using CrossfitUniversity.ViewModels;
+using PagedList;
 
 namespace CrossfitUniversity.Controllers
 {
@@ -17,25 +18,56 @@ namespace CrossfitUniversity.Controllers
         private CrossfitContext db = new CrossfitContext();
 
         // GET: Affiliate
-        public ActionResult Index(int? id)
+        //public ActionResult Index(int? id)
+        //{
+        //    //return View(db.Affiliates.ToList());
+
+        //    var viewModel = new AffiliateIndexData();
+        //    viewModel.Affiliates = db.Affiliates
+        //        .Include(a => a.Athletes)
+        //        //.Include(i => i.Courses.Select(c => c.Department))
+        //        .OrderBy(a => a.Name).Take(50);
+
+        //    if (id != null)
+        //    {
+        //        ViewBag.CfAffiliateId = id.Value;
+        //        viewModel.Athletes = viewModel.Affiliates.Where(
+        //            a => a.CfAffiliateId == id.Value).FirstOrDefault().Athletes;
+        //    }
+
+        //    return View(viewModel);
+        //}
+
+        public ActionResult Index(int? id, string sortOrder, string currentFilter, string searchString, int? page)
         {
             //return View(db.Affiliates.ToList());
+
+            ViewBag.CurrentSort = sortOrder;
+            ViewBag.NameSortParm = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
+            ViewBag.RegionSortParm = sortOrder == "Region" ? "region_desc" : "Region";
 
             var viewModel = new AffiliateIndexData();
             viewModel.Affiliates = db.Affiliates
                 .Include(a => a.Athletes)
                 //.Include(i => i.Courses.Select(c => c.Department))
                 .OrderBy(a => a.Name).Take(50);
-
+            var affiliates = db.Affiliates
+                .Include(a => a.Athletes)
+                //.Include(i => i.Courses.Select(c => c.Department))
+                .OrderBy(a => a.Name);
+            int pageSize = 5;
+            int pageNumber = (page ?? 1);
+            viewModel.AffiliatePagedList = affiliates.ToPagedList(pageNumber, pageSize);
             if (id != null)
             {
                 ViewBag.CfAffiliateId = id.Value;
-                viewModel.Athletes = viewModel.Affiliates.Where(
+                viewModel.Athletes = affiliates.Where(
                     a => a.CfAffiliateId == id.Value).FirstOrDefault().Athletes;
             }
 
             return View(viewModel);
         }
+
 
         // GET: Affiliate/Details/5
         public ActionResult Details(int? id)
