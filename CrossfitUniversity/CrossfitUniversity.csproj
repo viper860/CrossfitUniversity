@@ -214,6 +214,7 @@
     <Content Include="Views\Affiliate\Details.cshtml" />
     <Content Include="Views\Affiliate\Edit.cshtml" />
     <Content Include="Views\Affiliate\Index.cshtml" />
+    <Content Include="Views\Athlete\_AthletePartialPage.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201606232040552_InitialCreate.resx">

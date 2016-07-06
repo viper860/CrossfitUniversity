@@ -60,7 +60,10 @@ namespace CrossfitUniversity.Controllers
             //return View(athletes.ToList());
             int pageSize = 5;
             int pageNumber = (page ?? 1);
-            return View(athletes.ToPagedList(pageNumber, pageSize));
+            return Request.IsAjaxRequest()
+                ? (ActionResult)PartialView("_AthletePartialPage", athletes.ToPagedList(pageNumber, pageSize))
+                : View(athletes.ToPagedList(pageNumber, pageSize));
+            //return View(athletes.ToPagedList(pageNumber, pageSize));
         }
 
         // GET: Athlete/Details/5
